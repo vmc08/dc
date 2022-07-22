@@ -1,0 +1,18 @@
+{
+  "applinks": {
+      "details": [
+           {
+             "appIDs": [ "46AN4NYDJJ.com.highoutput.identifi.app" ],
+             "components": [
+               {
+                  "/": "/invite/*",
+                  "comment": "Matches any URL whose path starts with /invite/"
+               }
+             ]
+           }
+       ]
+   },
+   "webcredentials": {
+      "apps": [ "46AN4NYDJJ.com.highoutput.identifi.app" ]
+   }
+}
