@@ -15,6 +15,7 @@
     "generate:types": "graphql-codegen -r dotenv/config",
     "generate:changelog": "node ./scripts/changelog.js",
     "preinstall": "rm -rf .husky",
+    "postinstall": "husky install .husky && husky add .husky/pre-commit \"npm run tsc-node && node_modules/.bin/lint-staged\"",
     "cz": "git cz"
   },
   "lint-staged": {
