@@ -1,5 +1,6 @@
 import React from 'react'
 import { Box, Text, Divider, SimpleGrid, VStack } from '@chakra-ui/react'
+import NextImage from 'next/image'
 
 import ValuePreview from './value-preview'
 
@@ -15,6 +16,7 @@ interface CardPreviewProps {
     state: string
     postcode: string
     country: string
+    file: string
   }
 }
 
@@ -25,7 +27,9 @@ const CardPreview: React.FC<CardPreviewProps> = ({ values }) => {
         <Text color="white" fontSize="lg">
           {values.firstname} {values.lastname}
         </Text>
-        <Box bg="black" width={70} height={70} pos="absolute" right={4} bottom={-2} />
+        <Box bg="black" width={70} height={70} pos="absolute" right={4} bottom={-2}>
+          <NextImage width={70} height={70} src={values.file} />
+        </Box>
       </Box>
       <VStack p={6} bg="white" gap={1} w="full">
         <ValuePreview label="Email:" value={values.email} />

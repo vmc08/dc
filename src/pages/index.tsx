@@ -1,4 +1,4 @@
-import { FC, useState, ChangeEvent } from 'react'
+import { FC, useState, ChangeEvent, useRef, useEffect } from 'react'
 import { Flex, Box, Heading, SimpleGrid, Button } from '@chakra-ui/react'
 
 import FormHeader from '@components/form-header'
@@ -6,6 +6,7 @@ import Input from '@components/input'
 import CardPreview from '@components/card-preview'
 
 const Home: FC = () => {
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const [formValue, setFormValue] = useState({
     firstname: '',
     lastname: '',
@@ -17,12 +18,12 @@ const Home: FC = () => {
     state: '',
     postcode: '',
     country: '',
+    file: '',
   })
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name as keyof typeof formValue
     const value = e.target.value
-    console.log(name)
     if (name) {
       setFormValue({
         ...formValue,
@@ -30,6 +31,26 @@ const Home: FC = () => {
       })
     }
   }
+
+  const onUploadClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click()
+    }
+  }
+
+  useEffect(() => {
+    if (fileInputRef.current) {
+      fileInputRef.current.onchange = () => {
+        const files = fileInputRef.current?.files
+        if (files?.[0]) {
+          setFormValue({
+            ...formValue,
+            file: URL.createObjectURL(files[0]),
+          })
+        }
+      }
+    }
+  }, [formValue])
 
   return (
     <Flex alignItems="center" justifyContent="center" h="100vh">
@@ -77,7 +98,10 @@ const Home: FC = () => {
             />
           </SimpleGrid>
           <SimpleGrid columns={2} gap={4} py={4}>
-            <Button colorScheme="gray">Upload Avatar</Button>
+            <input type="file" ref={fileInputRef} hidden name="" />
+            <Button colorScheme="gray" onClick={onUploadClick}>
+              Upload Avatar
+            </Button>
             <Button colorScheme="blue">Create hCard</Button>
           </SimpleGrid>
         </Box>
